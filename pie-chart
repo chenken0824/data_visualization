@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>sexual</title>
+    <!-- 引入 echarts.js -->
+    <script src="/Users/chenk/Downloads/echarts.js"></script>
+    <script src="/Users/chenk/Downloads/require.js" defer async="true" ></script>
+</head>
+
+<body>
+
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="first" style="width: 1200px;height:400px;"></div>
+<script type="text/javascript">
+//var myChart = echarts.init(document.getElementById('main'));
+
+// ------firstChart start----------
+var firstChart = echarts.init(document.getElementById('first'));
+
+//firstChart.showLoading();
+//firstChart.hideLoading();
+
+option = {
+  baseOption: {
+    timeline: {
+      axisType: 'category',
+      orient: 'vertical',
+      autoPlay: true,
+      inverse: true,
+      playInterval: 1000,
+      left: null,
+      right: 150,
+      top: 20,
+      bottom: 20,
+      width: 50,
+      height: null,
+      label: {
+          normal: {
+              textStyle: {
+                  color: '#000'
+              }
+          },
+          emphasis: {
+              textStyle: {
+                  color: 'red'
+              }
+          }
+      },
+      symbol: 'none',
+      lineStyle: {
+          color: '#555'
+      },
+      checkpointStyle: {
+          color: '#bbb',
+          borderColor: '#777',
+          borderWidth: 5
+      },
+      controlStyle: {
+          showNextBtn: true,
+          showPrevBtn: true,
+          normal: {
+              color: '#666',
+              borderColor: '#666'
+          },
+          emphasis: {
+              color: '#aaa',
+              borderColor: '#aaa'
+          }
+      },
+      data: [2008,2009,2010,2011,2012,2013,2014,2015,2016]
+    },
+    legend: {
+      top: 10,
+      icon:'circle',
+      textStyle: {
+        color: 'black'
+      },
+      data: ['<5000','5000-9999','10000-15999','16000-19999','20000-29999','>=30000','\n','<35','35-44','45-54','>=55']
+    },
+     title: {
+        text: 'Sub Aggregation Pie Chart',
+        top:'330',
+        left:'center',
+        textStyle:{
+          fontSize:'30',
+          fontStyle:'oblique',
+          fontFamily:'monospace',
+          textBorderColor:'red'
+        }
+     },
+    tooltip: {
+          show:true,
+          trigger:'item',
+          formatter: "{a} <br/>{b}: {c} ({d}%)"
+        },
+    series: [
+      {
+        name: 'Salary Proportion',
+        type: 'pie',
+        center: ['50%', '50%'],
+        radius: [0,'30%'],
+        label:{
+          itemStyle: {
+              normal: {
+                  color: new echarts.graphic.RadialGradient(0.4, 0.5, 1, [{
+                      offset: 0,
+                      color: '#eee'
+                      },{
+                        offset: 0.8,
+                        color: '#258BCD'
+                      },{
+                        offset: 1,
+                      color: 'rgb(204, 46, 72)'
+                      }])
+            }
+          },
+          normal: {
+                  show:false
+          }
+        },
+        labelLine: {
+            normal: {
+                show: true
+            }
+        }
+      },
+      {
+        name: 'Work Time Proportion',
+        type: 'pie',
+        center: ['50%','50%'],
+        radius: ['40%','50%'],
+        tooltip: {
+            show:false
+        },
+        label: {
+          itemStyle: {
+              normal: {
+                  shadowBlur: 10,
+                  shadowColor: 'rgba(120, 36, 50, 0.5)',
+                  shadowOffsetY: 5,
+                  color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                      offset: 0,
+                      color: 'rgb(251, 118, 123)'
+                  }, {
+                  offset: 1,
+                  color: 'rgb(204, 46, 72)'
+                  }])
+              }
+          },
+          normal: {
+            formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+            backgroundColor: '#eee',
+            borderColor: '#aaa',
+            borderWidth: 1,
+            borderRadius: 4,
+            rich: {
+                a: {
+                    color: '#999',
+                    lineHeight: 22,
+                    align: 'center'
+                },
+                hr: {
+                    borderColor: '#aaa',
+                    width: '100%',
+                    borderWidth: 0.5,
+                    height: 0
+                },
+                b: {
+                    fontSize: 16,
+                    lineHeight: 33
+                },
+                per: {
+                    color: '#eee',
+                    backgroundColor: '#334455',
+                    padding: [2, 4],
+                    borderRadius: 2
+                }
+            }
+          }
+        }
+      }
+    ],
+    animationDurationUpdate: 1000,
+    animationEasingUpdate: 'quinticInOut'
+  },
+  options: [
+  {
+    series: [
+      {data:[
+              {
+                name:'<5000',
+                value:481.0
+              },
+              {
+                name:'5000-9999',
+                value: 1098.9
+              },
+              {
+                name:'10000-15999',
+                value:888.3
+              },
+              {
+                name:'16000-19999',
+                value:188.8
+              },
+              {
+                name:'20000-29999',
+                value: 416.8
+              },
+              {
+                name:'>=30000',
+                value:432.7
+              }
+      ]},{
+      data:[
+            {
+                name:'<35',
+                value:484.4
+            },
+            {
+                name:'35-44',
+                value: 1057.7
+            },
+            {
+                name:'45-54',
+                value:1205.6
+            },
+            {
+                name:'>=55',
+                value:761.4
+            }
+      ]}]
+  },
+  {
+    series: [
+      {data:[
+          {
+              name:'<5000',
+              value:486.6
+          },
+          {
+              name:'5000-9999',
+              value:1075.0
+          },
+          {
+              name:'10000-15999',
+              value:875.9
+          },
+          {
+              name:'16000-19999',
+              value:185.1
+          },
+          {
+              name:'20000-29999',
+              value:401.8
+          },
+          {
+              name:'>=30000',
+              value:436.4
+          }
+      ]},{
+      data:[
+          {
+              name:'<35',
+              value:511.8
+          },
+          {
+              name:'35-44',
+              value:1049.2
+
+          },
+          {
+              name:'45-54',
+              value:1177
+          },
+          {
+              name:'>=55',
+              value:735.6
+          }
+      ]}]
+  },
+  {
+    series: [
+        {
+            data:[
+                {
+                    name:'<5000',
+                    value:458.1
+                },
+                {
+                    name:'5000-9999',
+                    value: 1025.5
+                },
+                {
+                    name:'10000-15999',
+                    value:943.4
+                },
+                {
+                    name:'16000-19999',
+                    value:184.4
+                },
+                {
+                    name:'20000-29999',
+                    value:422.4
+                },
+                {
+                    name:'>=30000',
+                    value:  481.9
+                }
+            ]
+        },
+        {
+            data:[
+                {
+                    name:'<35',
+                    value:458.1
+                },
+                {
+                    name:'35-44',
+                    value: 1025.5
+
+                },
+                {
+                    name:'45-54',
+                    value:1257.1
+                },
+                {
+                    name:'>=55',
+                    value:780.6
+                }
+            ]
+        }
+    ]
+  },
+  {
+    series: [
+        {
+        data:[
+            {
+                name:'<5000',
+                value:457.0
+            },
+            {
+                name:'5000-9999',
+                value:928.8
+            },
+            {
+                name:'10000-15999',
+                value:1008.7
+            },
+            {
+                name:'16000-19999',
+                value: 205.2
+            },
+            {
+                name:'20000-29999',
+                value:460.4
+            },
+            {
+                name:'>=30000',
+                value:554.6
+            }
+        ]
+        },
+        {
+        data:[
+            {
+                name:'<35',
+                value:492.6
+            },
+            {
+                name:'35-44',
+                value:1091.9
+            },
+            {
+                name:'45-54',
+                value:1248.7
+            },
+            {
+                name:'>=55',
+                value:743.2
+            }
+        ]
+        }]
+  },
+  {
+    series: [
+      {
+          data:[
+              {
+                  name:'<5000',
+                  value:474.2
+              },
+              {
+                  name:'5000-9999',
+                  value:836.0
+              },
+              {
+                  name:'10000-15999',
+                  value:1059.9
+              },
+              {
+                  name:'16000-19999',
+                  value:243.9
+              },
+              {
+                  name:'20000-29999',
+                  value:463.8
+              },
+              {
+                  name:'>=30000',
+                  value:595.4
+              }
+          ]
+      },
+      {
+          data:[
+              {
+                  name:'<35',
+                  value:558.8
+              },
+              {
+                  name:'35-44',
+                  value: 1100.3
+              },
+              {
+                  name:'45-54',
+                  value:1297.7
+              },
+              {
+                  name:'>=55',
+                  value:701.1
+              }
+          ]
+      }]
+  },
+  {
+    series: [
+      {
+          data:[
+              {
+                  name:'<5000',
+                  value:490.9
+              },
+              {
+                  name:'5000-9999',
+                  value:714.3
+              },
+              {
+                  name:'10000-15999',
+                  value:1100.9
+              },
+              {
+                  name:'16000-19999',
+                  value:284.9
+              },
+              {
+                  name:'20000-29999',
+                  value:510.3
+              },
+              {
+                  name:'>=30000',
+                  value:637.6
+              }
+          ]
+      },
+      {
+          data:[
+              {
+                  name:'<35',
+                  value:566
+              },
+              {
+                  name:'35-44',
+                  value:1203.3
+              },
+              {
+                  name:'45-54',
+                  value:1269.3
+              },
+              {
+                  name:'>=55',
+                  value:685.4
+              }
+          ]
+      }
+    ]
+  },
+  {
+    series: [
+        {
+          data:[
+              {
+                  name:'<5000',
+                  value:489.2
+              },
+              {
+                  name:'5000-9999',
+                  value:623.6
+              },
+              {
+                  name:'10000-15999',
+                  value:1128.9
+              },
+              {
+                  name:'16000-19999',
+                  value:300.8
+              },
+              {
+                  name:'20000-29999',
+                  value:535.2
+              },
+              {
+                  name:'>=30000',
+                  value:694.8
+              }
+          ]
+      },
+      {
+          data:[
+              {
+                  name:'<35',
+                  value:653.2
+              },
+              {
+                  name:'35-44',
+                  value:1210.1
+              },
+              {
+                  name:'45-54',
+                  value:1226.8
+              },
+              {
+                  name:'>=55',
+                  value:653.3
+              }
+          ]
+      }
+    ]
+  },
+  {
+    series: [
+        {
+          data:[
+              {
+                  name:'<5000',
+                  value:475.7
+              },
+              {
+                  name:'5000-9999',
+                  value:518.3
+              },
+              {
+                  name:'10000-15999',
+                  value:1123.7
+              },
+              {
+                  name:'16000-19999',
+                  value:321.5
+              },
+              {
+                  name:'20000-29999',
+                  value:599.3
+              },
+              {
+                  name:'>=30000',
+                  value:741.9
+              }
+          ]
+      },
+      {
+          data:[
+              {
+                  name:'<35',
+                  value:619.7
+              },
+              {
+                  name:'35-44',
+                  value:1252.9
+              },
+              {
+                  name:'45-54',
+                  value:1256.5
+              },
+              {
+                  name:'>=55',
+                  value:644.8
+              }
+          ]
+      }
+    ]
+  },
+  {
+    series: [
+        {
+          data:[
+              {
+                  name:'<5000',
+                  value:488.2
+              },
+              {
+                  name:'5000-9999',
+                  value:424.7
+              },
+              {
+                  name:'10000-15999',
+                  value:1105.0
+              },
+              {
+                  name:'16000-19999',
+                  value:352
+              },
+              {
+                  name:'20000-29999',
+                  value:612.5
+              },
+              {
+                  name:'>=30000',
+                  value:804.6
+              }
+          ]
+      },
+      {
+          data:[
+              {
+                  name:'<35',
+                  value:638.6
+              },
+              {
+                  name:'35-44',
+                  value:1273.3
+              },
+              {
+                  name:'45-54',
+                  value:1223.7
+              },
+              {
+                  name:'>=55',
+                  value:651.5
+              }
+          ]
+      }]
+  }
+  ]
+};
+
+firstChart.setOption(option);
+
+//-----firstChart end-----------
+</script>
+<div id="second" style="width: 1200px;height:300px;"></div>
+<script type="text/javascript">
+// -----secondChart start-----
+var secondChart = echarts.init(document.getElementById("second"));
+
+option = {
+    title: [{text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 15,
+                bottom: 30,
+                textStyle: {
+                    color: '#F00',
+                    fontWeight: 'normal',
+                    fontSize: 15
+                }
+            },{
+                text:'Animated Bubble Chart',
+                link:'file:///C:/Users/chenk/Documents/bubble-gradient.html',
+                left: 15,
+                bottom: 30,
+                textStyle: {
+                    color: '#F00',
+                    fontWeight: 'normal',
+                    fontSize: 15
+                }
+            }],
+    legend: {
+        right:'80',
+        top:'20',
+        orient:'vertical',
+        type:'scroll',
+        icon:'circle',
+        textStyle: {
+          color: 'black'
+        },
+        data: ['<5000','5000-9999','10000-15999','16000-19999','20000-29999',
+                '>=30000','\n','<35','35-44','45-54','>=55']
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+//    legend: {
+//        data:[{name:'<5000',icon:'circle'},
+//              {name:'5000-9999',icon:'circle'},
+//              {name:'10000-15999',icon:'circle'},
+//              {name:'16000-19999',icon:'circle'},
+//              {name:'20000-29999',icon:'circle'},
+//              {name:'>=30000',icon:'circle'},'\n',
+//              {name:'<35',icon:'diamond'},
+//              {name:'35-44',icon:'diamond'},
+//              {name:'45-54',icon:'diamond'},
+//              {name:'>=55',icon:'diamond'}
+//          ]
+//    },
+    grid: {
+        x: '200',
+        y: '5',
+        x2: '200',
+        y2:'10',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+          show: true,
+      //    dataView: {readOnly: false},
+          magicType: {type: 'bar'},
+          restore: {},
+          saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['2008','2009','2010','2011','2012','2013','2014','2015','2016']
+    },
+    yAxis: [
+      {
+        type: 'value'
+      }
+    ],
+    series: [
+        {
+            name:'<5000',
+            type:'line',
+            lineStyle:{
+              normal:{
+                width:3
+              }
+            },
+            data:[0.2286,0.2266,0.1939,0.1537,0.1686,0.1644,0.1723,0.1775,0.1525]
+        },
+        {
+            name:'5000-9999',
+            type:'line',
+            lineStyle:{
+              normal:{
+                width:3
+              }
+            },
+            data:[1.0939,1.0947,1.0144,0.8662,0.8491,0.7703,0.7260,0.6248,0.6310]
+        },
+        {
+            name:'10000-15999',
+            type:'line',
+            lineStyle:{
+              normal:{
+                width:3
+              }
+            },
+            data:[1.5906,1.5634,1.5975,1.6849,1.4706,1.4260,1.3110,1.1960,1.1238]
+        },
+        {
+            name:'16000-19999',
+            type:'line',
+            lineStyle:{
+              normal:{
+                width:3
+              }
+            },
+            data:[1.5722,1.5391,1.6571,1.4545,1.4913,1.6090,1.6271,1.7644,1.7651]
+        },
+        {
+            name:'20000-29999',
+            type:'line',
+            lineStyle:{
+              normal:{
+                width:3
+              }
+            },
+            data:[1.4898,1.5773,1.5523,1.5366,1.5867,1.5502,1.5731,1.6612,1.5383]
+        },
+        {
+            name:'>=30000',
+            type:'line',
+            lineStyle:{
+              normal:{
+                width:3
+              }
+            },
+            data:[1.9060,1.7447,1.8181,1.6975,1.7745,1.7542,1.7473,1.6658,1.6766]
+        },
+        {
+            name:'<35',
+            type:'line',
+            //areaStyle: {normal: {}},
+            itemStyle:{
+              normal:{
+                borderType:'dashed'
+              }
+            },
+            lineStyle:{
+              normal:{
+                width:3,
+                type:'dashed'
+              }
+            },
+            data:[0.8197,0.8872,0.8148,0.7978,0.8645,0.7911,0.8567,0.8141,0.8065]
+        },
+        {
+            name:'35-44',
+            type:'line',
+            //areaStyle: {normal: {}},
+            lineStyle:{
+              normal:{
+                width:3,
+                type:'dashed'
+              }
+            },
+            data:[1.0658,1.0532,1.0232,1.0540,1.0399,1.0545,1.0341,1.0549,1.0392]
+        },
+        {
+            name:'45-54',
+            type:'line',
+            //areaStyle: {normal: {}},
+            lineStyle:{
+              normal:{
+                width:3,
+                type:'dashed'
+              }
+            },
+            data:[1.4136,1.3728,1.4092,1.3574,1.3136,1.3045,1.2639,1.2510,1.2682]
+        },
+        {
+            name:'>=55',
+            type:'line',
+            //areaStyle: {normal: {}},
+            lineStyle:{
+              normal:{
+                width:3,
+                type:'dashed'
+              }
+            },
+            data:[1.0820,1.0115,1.0197,0.9771,0.9405,0.9367,0.9438,0.9196,0.8743]
+        }
+    ]
+};
+
+
+secondChart.setOption(option);
+// -----secondChart end-----
+
+</script>
+</body>
+</html>
