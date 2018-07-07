@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+myChart.showLoading();
+
+var data={
+    series:[
+        [[137.18,43,206100,"Financial"],[111.95,54,194800,"Traveling"],[192.63,44,820200,"Logistic&Trade"],[84.96,48,457000,"Law&Architecture&Business"]],
+        [[211.70,40,211400,"Financial"],[112.59,54,192200,"Traveling"],[178.44,44,783900,"Logistic&Trade"],[88.16,47,456200,"Law&Architecture&Business"]],
+        [[217.20,43,216700,"Financial"],[118.40,54,215100,"Traveling"],[180.60,44,778200,"Logistic&Trade"],[96.50,48,460100,"Law&Architecture&Business"]],
+        [[217.26,43,226200,"Financial"],[120.52,54,236100,"Traveling"],[181.56,44,773800,"Logistic&Trade"],[99.80,48,469300,"Law&Architecture&Business"]],
+        [[218.65,40,229100,"Financial"],[126.56,54,251400,"Traveling"],[179.97,43,763600,"Logistic&Trade"],[103.01,45,482600,"Law&Architecture&Business"]],
+		[[213.41,40,231900,"Financial"],[131.85,54,270300,"Traveling"],[176.04,41,766300,"Logistic&Trade"],[105.08,45,496200,"Law&Architecture&Business"]],
+		[[209.90,40,236400,"Financial"],[131.28,51,271300,"Traveling"],[172.24,40,764800,"Logistic&Trade"],[104.09,45,507700,"Law&Architecture&Business"]],
+		[[209.39,40,246700,"Financial"],[133.76,50,265900,"Traveling"],[171.13,40,746900,"Logistic&Trade"],[109.10,45,521700,"Law&Architecture&Business"]],
+		[[218.05,40,252700,"Financial"],[136.89,50,266100,"Traveling"],[168.89,40,745200,"Logistic&Trade"],[111.50,44,532400,"Law&Architecture&Business"]]
+	]    
+};
+
+myChart.hideLoading();
+
+var itemStyle = {
+    normal: {
+        opacity: 0.8,
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowOffsetY: 0,
+        shadowColor: 'rgba(0, 0, 0, 0.5)'
+    }
+};
+
+var sizeFunction = function (x) {
+    var y = Math.sqrt(x / 50);
+    return y;
+};
+// Schema:
+var schema = [
+    {name: 'Salary/Price Level', index: 0, text: 'Salary/Price Level', unit: ''},
+    {name: 'Work Time', index: 1, text: 'Work Time', unit: 'Hour'},
+    {name: 'Population', index: 2, text: 'Population', unit: ''},
+    {name: 'Industry', index: 3, text: 'Industry', unit: ''}
+];
+
+option = {
+    baseOption: {
+        timeline: {
+            axisType: 'category',
+            orient: 'vertical',
+            autoPlay: true,
+            inverse: true,
+            playInterval: 1000,
+            left: null,
+            right: 0,
+            top: 20,
+            bottom: 20,
+            width: 55,
+            height: null,
+            label: {
+                normal: {
+                    textStyle: {
+                        color: '#999'
+                    }
+                },
+                emphasis: {
+                    textStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            symbol: 'none',
+            lineStyle: {
+                color: '#555'
+            },
+            checkpointStyle: {
+                color: '#bbb',
+                borderColor: '#777',
+                borderWidth: 2
+            },
+            controlStyle: {
+                showNextBtn: true,
+                showPrevBtn: true,
+                normal: {
+                    color: '#666',
+                    borderColor: '#666'
+                },
+                emphasis: {
+                    color: '#aaa',
+                    borderColor: '#aaa'
+                }
+            },
+            data: [2008,2009,2010,2011,2012,2013,2014,2015,2016]
+        },
+        legend: {
+            top: 30,
+            data: [{
+                name: 'Financial',
+                icon:'circle',
+                textStyle:{
+                    color:'#FFFFFF',
+                    fontSize:20,
+                }
+            },{
+                name: 'Traveling',
+                icon:'circle',
+                textStyle:{
+                    color:'#FFFFFF',
+                    fontSize:20,
+                }
+            },{
+                name: 'Logistic&Trade',
+                icon:'circle',
+                textStyle:{
+                    color:'#FFFFFF',
+                    fontSize:20,
+                }
+            },{
+                name: 'Law&Architecture&Business',
+                icon:'circle',
+                textStyle:{
+                    color:'#FFFFFF',
+                    fontSize:20,
+                }
+            }]        },
+        backgroundColor: '#000000',
+        title: {
+                text:'Main Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: '#ffffff',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }
+            },
+            
+        tooltip: {
+            padding: 5,
+            backgroundColor: '#222',
+            borderColor: '#777',
+            borderWidth: 1,
+            formatter: function (obj) {
+                var value = obj.value;
+                return schema[3].text + '：' + value[3] + '<br>'
+                        + schema[1].text + '：' + value[1] + schema[1].unit + '<br>'
+                        + schema[0].text + '：' + value[0] + schema[0].unit + '<br>'
+                        + schema[2].text + '：' + value[2] + '<br>';
+            }
+        },
+        grid: {
+            top: 100,
+            containLabel: true,
+            left: 30,
+            right: '110'
+        },
+        xAxis: {
+            type: 'value',
+            name: 'Salary/Price Level',
+            max: 300,
+            min: 40,
+            interval:30,
+            nameGap: 30,
+            nameLocation: 'middle',
+            nameTextStyle: {
+                fontSize: 18
+            },
+            splitLine: {
+                show: false
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#ccc'
+                }
+            },
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        yAxis: {
+            type: 'value',
+            name: 'Work Time',
+            max: 65,
+            min: 30,
+            interval:5,
+            nameTextStyle: {
+                color: '#ccc',
+                fontSize: 18
+            },
+            axisLine: {
+                lineStyle: {
+                    color: '#ccc'
+                }
+            },
+            splitLine: {
+                show: false
+            },
+            axisLabel: {
+                formatter: '{value} Hour'
+            }
+        },
+        visualMap: [
+            {
+                show: false,
+                dimension: 3,
+                categories: data.counties,
+                calculable: true,
+                precision: 0.1,
+                textGap: 30,
+                textStyle: {
+                    color: '#ccc'
+                },
+                inRange: {
+                    color: (function () {
+                        var colors = ['#bcd3bb', '#e88f70', '#edc1a5', '#9dc5c8', '#e1e8c8', '#7b7c68', '#e5b5b5', '#f0b489', '#928ea8', '#bda29a'];
+                        return colors.concat(colors);
+                    })()
+                }
+            }
+        ],
+        series: [
+            {
+                name: 'Financial', 
+                type: 'scatter',
+                itemStyle: {
+                    normal: {
+                        shadowBlur: 10,
+                        shadowColor: 'grey',
+                        shadowOffsetY: 10,
+                        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                            offset: 0,
+                            color: '#7F97D7'
+                        }, {
+                        offset: 1,
+                        color: '#5377D5'
+                        }])
+                    }
+                }
+            }, {
+                name: 'Traveling', 
+                type: 'scatter',
+                itemStyle: {
+                    normal: {
+                        shadowBlur: 10,
+                        shadowColor: 'grey',
+                        shadowOffsetY: 10,
+                        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                            offset: 0,
+                            color: 'rgb(208, 197, 102)'
+                        }, {
+                            offset: 1,
+                            color: 'rgb(238, 197, 102)'
+                        }])
+                    }
+                }
+            }, {
+                name: 'Logistic&Trade', 
+                type: 'scatter',
+                itemStyle: {
+                    normal: {
+                        shadowBlur: 10,
+                        shadowColor: 'grey',
+                        shadowOffsetY: 10,
+                        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                            offset: 0,
+                            color: '#D5A8CC'
+                        }, {
+                            offset: 1,
+                            color: '#C07EA8'
+                        }])
+                    }
+                }
+            }, {
+                name: 'Law&Architecture&Business', 
+                type: 'scatter',
+                itemStyle: {
+                    normal: {
+                        shadowBlur: 10,
+                        shadowColor: 'grey',
+                        shadowOffsetY: 10,
+                        color: new echarts.graphic.RadialGradient(0.4, 0.3, 1, [{
+                            offset: 0,
+                            color: '#B7D6D4'
+                        }, {
+                            offset: 1,
+                            color: '#7EA8C0'
+                        }])
+                    }
+                }
+            }],
+        animationDurationUpdate: 1000,
+        animationEasingUpdate: 'quinticInOut'
+    },
+    options: [
+        {
+            title:[{
+                text: 2008,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[0][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[0][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[0][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[0][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2009,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[1][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[1][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[1][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[1][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2010,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#fff',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[2][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[2][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[2][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[2][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2011,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[3][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[3][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[3][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[3][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2012,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[4][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[4][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[4][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[4][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+           title:[{
+                text: 2013,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[5][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[5][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[5][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[5][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2014,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[6][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[6][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[6][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[6][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2015,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[7][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[7][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[7][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[7][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        },{
+            title:[{
+                text: 2016,
+                textAlign: 'center',
+                left: '63%',
+                top: '25%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                }
+                },{
+                text:'Animated Bubble Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: 'white',
+                    fontWeight: 'normal',
+                    fontSize: 24
+                }},{
+                text:'radar chart',
+                link:'file:///C:/Users/chenk/Documents/radar-aqi.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                left: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }],
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:data.series[8][0]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Traveling',
+                            value:data.series[8][1]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Logistic&Trade',
+                            value:data.series[8][2]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+                {
+                    data: [
+                        {
+                            name:'Law&Architecture&Business',
+                            value:data.series[8][3]
+                        }
+                    ],
+                    type: 'scatter',
+                    symbolSize: function(val) {
+                        return sizeFunction(val[2]);
+                    }
+                },
+            ]
+        }
+    ]
+};
+
+    myChart.setOption(option);;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
