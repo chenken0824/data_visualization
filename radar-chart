@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+       <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+var data={
+    series:[
+        [[612711,10,78.3,7298,452400],[258500,2.3,54,26796,708400],[1456300,3.2,69,86545,2321200],[559800,15,70,19876,1123500]],
+        [[638600,29,82,7596,458100],[283700,1.3,58,26304,754300],[1486100,3.2,72,85888,2290800],[609900,19,73,20210,1196100]],
+        [[692500,37,86,7659,463800],[317600,0.7,62,25446,811200],[1501400,3.4,74,82793,2299000],[620200,21,76,22324,1224000]],
+        [[735900,50.7,88,7833,472800],[337400,-1.1,65,25071,813900],[1547100,0.1,78,82769,2294390],[653100,15.4,79,24864,1256600]],
+        [[819800,65,90,7916,493300],[348900,-8.7,69,25075,797700],[1552300,-3.9,78,80512,2240500],[687000,-8.6,84,23342,1276899]],
+        [[923987,98.6,92,8023,529890],[376800,-11.1,72,24768,786654],[1562290,-2.3,84,79234,2199760],[704876,41.9,89,21323,1298654]]
+        //[[989200,21.4,95,8323,554309,”Financial”],[398212,-9.8,76,24545,775643”Traveling”],[1574897,5.9,96,78232,2176757”Logistic&Trade”],[716987,54.9,92,20576，1160300”Law&Architecture&Business”]],
+	]    
+};
+
+option = {
+    baseOption: {
+        timeline: {
+            axisType: 'category',
+            orient: 'vertical',
+            autoPlay: true,
+            inverse: true,
+            playInterval: 1000,
+            left: null,
+            right: 0,
+            top: 20,
+            bottom: 20,
+            width:55,
+            height: null,
+            label: {
+                normal: {
+                    textStyle: {
+                        color: '#999'
+                    }
+                },
+                emphasis: {
+                    textStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            symbol: 'none',
+            lineStyle: {
+                color: '#555'
+            },
+            checkpointStyle: {
+                color: '#bbb',
+                borderColor: '#777',
+                borderWidth: 2
+            },
+            controlStyle: {
+                showNextBtn: true,
+                showPrevBtn: true,
+                normal: {
+                    color: '#666',
+                    borderColor: '#666'
+                },
+                emphasis: {
+                    color: '#aaa',
+                    borderColor: '#aaa'
+                }
+            },
+            data: [2011,2012,2013,2014,2015,2016]
+        },
+        
+        legend: {
+            orient: 'vertical',
+            left: 0,
+            bottom:20,
+            //itemHeight: 20,
+            //itemWidth: 25,
+            inactiveColor:'red',
+            borderColor:'green',
+            data: [{
+                name: 'Financial',
+                icon:'circle',
+                textStyle:{
+                    color:'#5775B4',
+                    fontSize:20,
+                }
+            },{
+                name: 'Traveling',
+                icon:'circle',
+                textStyle:{
+                    color:'rgb(238, 197, 102)',
+                    fontSize:20,
+                }
+            },{
+                name: 'Logistic&Trade',
+                icon:'circle',
+                textStyle:{
+                    color:'#B3E4A1',
+                    fontSize:20,
+                }
+            },{
+                name: 'Law&Architecture&Business',
+                icon:'circle',
+                textStyle:{
+                    color:'#E9EAEA',
+                    fontSize:20,
+                }
+            }]
+        },
+        backgroundColor: '#161627',
+        title: [
+            {
+                text:'Radar Chart',
+                left: 'center',
+                top: 0,
+                textStyle: {
+                    color: '#666',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Animated Bubble Chart',
+                link:'file:///C:/Users/chenk/Documents/bubble-gradient.html',
+                right: 45,
+                bottom: 30,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            },{
+                text:'Sub Aggregation Pie Chart',
+                link:'file:///C:/Users/chenk/Documents/pie-chart',
+                right: 45,
+                bottom: 60,
+                textStyle: {
+                    color: '#FFF8DC',
+                    fontWeight: 'normal',
+                    fontSize: 20
+                }
+            }
+        ],
+        tooltip: {},
+        visualMap: [
+            {
+                show: false,
+                dimension: 3,
+                categories: data.counties,
+                calculable: true,
+                precision: 0.1,
+                textGap: 30,
+                textStyle: {
+                    color: '#ccc'
+                },
+                inRange: {
+                    color: (function () {
+                        var colors = ['#bcd3bb', '#e88f70', '#edc1a5', '#9dc5c8', '#e1e8c8', '#7b7c68', '#e5b5b5', '#f0b489', '#928ea8', '#bda29a'];
+                        return colors.concat(colors);
+                    })()
+                }
+            }
+        ],
+        radar: {
+            // shape: 'circle',
+            name: {
+                textStyle: {
+                    color: 'rgb(238, 197, 102)',
+                    backgroundColor: '#161627',
+                    borderRadius: 3,
+                    fontSize:14,
+                    padding: [3, 5]
+                }
+            },
+            indicator: [
+                { name: 'incremental value', max: 1580000},
+                { name: 'profit change rate', max: 100},
+                { name: 'internet usage', max: 100},
+                { name: 'numbers of enterprise', max: 86600},
+                { name: 'population', max: 2322000}
+            ],
+            shape:'circle',
+            splitNumber: 5,
+        splitLine: {
+            lineStyle: {
+                color: [
+                    'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                    'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                    'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)'
+                ].reverse()
+            }
+        },
+        splitArea: {
+            show: false
+        },
+        axisLine: {
+            lineStyle: {
+                color: 'rgba(238, 197, 102, 0.5)'
+            }
+        }
+        },
+        series:[
+           {    
+                name: 'Financial',
+                type: 'radar',
+                tooltip: {
+                    trigger: 'item'
+                },
+                symbol: "none", // 去掉图表中各个图区域的边框线拐点
+                itemStyle: {
+                            normal: {
+                                color : "rgba(0,0,0,0)", // 图表中各个图区域的边框线拐点颜色
+                                lineStyle: {
+                                    color:'#5775B4' // 图表中各个图区域的边框线颜色
+                                },
+                                areaStyle: {
+                                    opacity:'0.3',
+                                    color:'#5775B4'
+                                }
+                            }
+                        },
+            },
+            {    
+                name: 'Traveling',
+                type: 'radar',
+                tooltip: {
+                    trigger: 'item'
+                },
+                symbol: "none", // 去掉图表中各个图区域的边框线拐点
+                itemStyle: {
+                            normal: {
+                                color : "rgba(0,0,0,0)", // 图表中各个图区域的边框线拐点颜色
+                                lineStyle: {
+                                    color:"rgb(238, 197, 102)" // 图表中各个图区域的边框线颜色
+                                },
+                                areaStyle: {
+                                    opacity:'0.3',
+                                    color:'rgb(238, 197, 102)'
+                                }
+                            }
+                        },
+            },
+            {    
+                name: 'Logistic&Trade',
+                type: 'radar',
+                tooltip: {
+                    trigger: 'item'
+                },
+                symbol: "none", // 去掉图表中各个图区域的边框线拐点
+                itemStyle: {
+                            normal: {
+                                color : "rgba(0,0,0,0)", // 图表中各个图区域的边框线拐点颜色
+                                lineStyle: {
+                                    color:'#B3E4A1' // 图表中各个图区域的边框线颜色
+                                },
+                                areaStyle: {
+                                    opacity:'0.3',
+                                    color:'#B3E4A1'
+                                }
+                            }
+                        },
+            },
+            {    
+                name: 'Law&Architecture&Business', 
+                type: 'radar',
+                tooltip: {
+                    trigger: 'item'
+                },
+                symbol: "none", // 去掉图表中各个图区域的边框线拐点
+                itemStyle: {
+                            normal: {
+                                color : "rgba(0,0,0,0)", // 图表中各个图区域的边框线拐点颜色
+                                lineStyle: {
+                                    color:"#E9EAEA" // 图表中各个图区域的边框线颜色
+                                },
+                                areaStyle: {
+                                    opacity:'0.3',
+                                    //type: 'default'
+                                    color:'#E9EAEA'
+                                }
+                            }
+                        },
+            },
+            
+        ]
+    },
+    options: [
+        {
+            title: {
+                text: 2011,
+                textAlign: 'center',
+                left: '15%',
+                top: '15%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                },
+            },
+            series: [
+               {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:[612711,10,78.3,7298,452400]
+                        }]},
+                    {data:[
+                        {
+                            name:'Traveling',
+                            value:[258500,2.3,54,26796,708400]
+                        }]},
+                    {data:[
+                        {
+                            name:'Logistic&Trade',
+                            value:[1456300,3.2,69,86545,2321200]
+                        }]},
+                    {data:[
+                        {
+                            name:'Law&Architecture&Business',
+                            value:[559800,15,70,19876,1123500]
+                        }]}
+                    ],
+                },{
+            title: {
+                text: 2012,
+                textAlign: 'center',
+                left: '15%',
+                top: '15%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                },
+            },
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:[638600,29,82,7596,458100]
+                        }]},
+                   {data:[
+                        {
+                            name:'Traveling',
+                            value:[283700,1.3,58,26304,754300]
+                        }]},{data:[{
+                            name:'Logistic&Trade',
+                            value:[1486100,3.2,72,85888,2290800]
+                        }]},{data:[{
+                            name:'Law&Architecture&Business',
+                            value:[609900,19,73,20210,1196100]
+                        }]}
+                    ]
+        },{
+            title: {
+                text: 2013,
+                textAlign: 'center',
+                left: '15%',
+                top: '15%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                },
+            },
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:[692500,37,86,7659,463800]
+                        }]},{data:[
+                        {
+                            name:'Traveling',
+                            value:[317600,0.7,62,25446,811200]
+                        }]},{data:[{
+                            name:'Logistic&Trade',
+                            value:[1501400,3.4,74,82793,2299000]
+                        }]},{data:[{
+                            name:'Law&Architecture&Business',
+                            value:[620200,21,76,22324,1224000]
+                        }]}
+                    ],
+        },{
+            title: {
+                text: 2014,
+                textAlign: 'center',
+                left: '15%',
+                top: '15%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                },
+            },
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:[735900,50.7,88,7833,472800]
+                        }]},{data:[{
+                            name:'Traveling',
+                            value:[337400,-1.1,65,25071,813900]
+                        }]},{data:[{
+                            name:'Logistic&Trade',
+                            value:[1547100,0.1,78,82769,2294390]
+                        }]},{data:[{
+                            name:'Law&Architecture&Business',
+                            value:[653100,15.4,79,24864,1256600]
+                        }]}
+            ]
+        },{
+            title: {
+                text: 2015,
+                textAlign: 'center',
+                left: '15%',
+                top: '15%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                },
+            },
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:[819800,65,90,7916,493300]
+                        }]},{data:[{
+                            name:'Traveling',
+                            value:[348900,-8.7,69,25075,797700]
+                        }]},{data:[{
+                            name:'Logistic&Trade',
+                            value:[1552300,-3.9,78,80512,2240500]
+                        }]},{data:[{
+                            name:'Law&Architecture&Business',
+                            value:[687000,-8.6,84,23342,1276899]
+                        }]}
+            ]
+        },{
+            title: {
+                text: 2016,
+                textAlign: 'center',
+                left: '15%',
+                top: '15%',
+                textStyle: {
+                    fontSize: 100,
+                    color: 'rgba(255, 255, 255, 0.7)'
+                },
+            },
+            series: [
+                {
+                    data: [
+                        {
+                            name:'Fianancial',
+                            value:[923987,98.6,92,8023,529890]
+                        }]},{data:[{
+                            name:'Traveling',
+                            value:[376800,-11.1,72,24768,786654]
+                        }]},{data:[{
+                            name:'Logistic&Trade',
+                            value:[1562290,-2.3,84,79234,2199760]
+                        }]},{data:[{
+                            name:'Law&Architecture&Business',
+                            value:[704876,41.9,89,21323,1298654]
+                        }]}
+            ]
+        }
+    ]
+};
+
+    myChart.setOption(option);;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
